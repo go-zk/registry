@@ -1,6 +1,8 @@
 # zk注册中心
 实现了服务注册与发现逻辑，模块独立，引入方便。
+
 支持：
+
 - 服务注册
 - 服务发现
 - 可添加node到本地注册表，不注册到zk
@@ -8,10 +10,10 @@
 - 支持外部负载均衡
 - spring cloud（java）服务发现支持
 
-获取服务器IP可使用ipv4包自动获取
-```
-https://github.com/go-basic/ipv4
+获取服务器IP可使用ipv4包自动获取 https://github.com/go-basic/ipv4
+
 用法：
+```
 go get github.com/go-basic/ipv4
 ip = ipv4.LocalIP()
 ```
