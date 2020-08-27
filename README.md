@@ -32,7 +32,7 @@ import (
 //服务注册示例
 func main() {
 	zkManager, err := registry.NewZkRegistry(
-		registry.Hosts([]string{"192.168.40.131:2181"}),
+		registry.Hosts([]string{"127.0.0.1:2181"}),
 		registry.Prefix("/zk-registry"),
 		registry.Timeout(15),
 		registry.Listens([]string{"test-service"}),
@@ -66,7 +66,7 @@ import (
 //服务发现示例
 func main() {
 	zkRegistry, err := registry.NewZkRegistry(
-		registry.Hosts([]string{"192.168.40.131:2181"}),
+		registry.Hosts([]string{"127.0.0.1:2181"}),
 		registry.Prefix("/zk-registry"),
 		registry.Timeout(15),
 		registry.Listens([]string{"test-service"}),
