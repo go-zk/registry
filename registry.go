@@ -159,11 +159,26 @@ func (z *ZkRegistry) watchNode(serviceName string, wg *sync.WaitGroup) {
 			var newNodes = make(map[string]bool)
 			for _, nodeId := range nodeIds {
 				newData, _, err := conn.Get(path + "/" + nodeId)
+				if err != nil {
+					log.Println(err.Error())
+					continue
+				}
 				var node Node
-				json.Unmarshal(newData, &node)
-				newNodes[node.Id] = true
+				err = json.Unmarshal(newData, &node)
+				if err != nil {
+					log.Println(err.Error())
+					continue
+				}
+				newNodes[nodeId] = true
+				if node.Id == "" {		//兼容node没有定义ID的情况
+					node.Id = nodeId
+				}
 				err = z.setServiceNode(serviceName, &node)
-				log.Println(fmt.Sprintf("%+v", node), err.Error())
+				if err != nil {
+					log.Println(err.Error())
+					continue
+				}
+				log.Println(fmt.Sprintf("%+v", &node))
 			}
 			//不在注册中心的节点删除
 			for id, node := range z.register[serviceName] {
