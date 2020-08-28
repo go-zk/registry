@@ -163,10 +163,7 @@ func (z *ZkRegistry) watchNode(serviceName string, wg *sync.WaitGroup) {
 				json.Unmarshal(newData, &node)
 				newNodes[node.Id] = true
 				err = z.setServiceNode(serviceName, &node)
-				if err != nil {
-					log.Println(err.Error())
-				}
-				log.Println(fmt.Sprintf("%+v", node), err)
+				log.Println(fmt.Sprintf("%+v", node), err.Error())
 			}
 			//不在注册中心的节点删除
 			for id, node := range z.register[serviceName] {

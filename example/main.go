@@ -12,7 +12,7 @@ import (
 var (
 	zkRegistry *registry.ZkRegistry
 	err        error
-	port       = "8080"
+	port       = ":8888"
 )
 
 //注册中心http demo
@@ -40,7 +40,7 @@ func main() {
 	//获取监听服务列表
 	http.HandleFunc("/service", service)
 	log.Println("start running : " + port)
-	http.ListenAndServe(port, nil)
+	log.Fatal(http.ListenAndServe(port, nil))
 }
 
 //随机获取一个服务节点
