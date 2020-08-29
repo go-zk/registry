@@ -41,6 +41,9 @@ func (z *ZkRegistry) ensureRoot() error {
 
 //watch 所有监听服务首次监听需阻塞
 func (z *ZkRegistry) watchListens() {
+	if len(z.opts.listens) == 0 {
+		return //无配置监听服务不执行
+	}
 	var wg = sync.WaitGroup{}
 	for _, serviceName := range z.opts.listens {
 		wg.Add(1)
