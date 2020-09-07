@@ -153,7 +153,9 @@ func (z *ZkRegistry) watchNode(serviceName string, wg *sync.WaitGroup) {
 		for {
 			nodeIds, _, events, err := conn.ChildrenW(path)
 			if err != nil {
-				log.Println(err.Error())
+				log.Println("watch[" + serviceName + "]err:" + err.Error())
+				time.Sleep(time.Duration(z.opts.timeout) * time.Second)
+				continue
 			}
 			//获取信息
 			var newNodes = make(map[string]bool)
@@ -170,7 +172,7 @@ func (z *ZkRegistry) watchNode(serviceName string, wg *sync.WaitGroup) {
 					continue
 				}
 				newNodes[nodeId] = true
-				if node.Id == "" {		//兼容node没有定义ID的情况
+				if node.Id == "" { //兼容node没有定义ID的情况
 					node.Id = nodeId
 				}
 				err = z.setServiceNode(serviceName, &node)
